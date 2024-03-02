@@ -13,6 +13,7 @@ public class QueryStringUtils {
 
     public static String encode(Map<String, String> params) {
         try {
+
             StringBuilder sb = new StringBuilder();
             for (Map.Entry<String, String> e : params.entrySet()) {
                 if (sb.length() > 0) {
