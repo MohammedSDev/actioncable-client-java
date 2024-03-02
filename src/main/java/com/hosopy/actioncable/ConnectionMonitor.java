@@ -31,6 +31,8 @@ public class ConnectionMonitor {
     private long stoppedAt = 0; // milliseconds
 
     private int reconnectAttempts = 0;
+    
+    private boolean pingPong = false;
 
     /*package*/ ConnectionMonitor(Connection connection, Connection.Options options) {
         this.connection = connection;
@@ -40,6 +42,7 @@ public class ConnectionMonitor {
         this.reconnectionMaxAttempts = options.reconnectionMaxAttempts;
         this.reconnectionDelay = options.reconnectionDelay;
         this.reconnectionDelayMax = options.reconnectionDelayMax;
+        this.pingPong = options.pingPong;
     }
 
     /*package*/ void recordConnect() {
@@ -54,6 +57,9 @@ public class ConnectionMonitor {
 
     /*package*/ void recordPing() {
         pingedAt = now();
+        if(pingPong) {
+            connection.send(Command.pong().toJson());
+        }
     }
 
     /*package*/ void start() {

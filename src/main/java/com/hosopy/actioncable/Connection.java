@@ -90,6 +90,13 @@ public class Connection {
          */
         public OkHttpClientFactory okHttpClientFactory;
 
+ /**
+         * Whether to pingPong is automatically.
+         * <p/>
+         * <p>If pingPong is true, the client attempts to response to the server ping by send 'pong' command.</p>
+         */
+        public boolean pingPong = false;
+        
         /**
          * The ping interval on how often a ping is sent over the websocket connection
          * <p/>

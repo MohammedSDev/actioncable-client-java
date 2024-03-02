@@ -41,6 +41,10 @@ class Command {
         return new Command("message", identifier, params.toString());
     }
 
+    static Command pong() {
+        return new Command("pong", null);
+    }
+
     /*package*/ String toJson() {
         return GSON.toJson(this);
     }
