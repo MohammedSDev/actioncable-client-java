@@ -3,7 +3,7 @@ package com.hosopy.actioncable;
 import com.google.gson.*;
 import com.google.gson.annotations.Expose;
 
-class Command {
+public class Command {
 
     private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
@@ -23,7 +23,7 @@ class Command {
         this(command, identifier, null);
     }
 
-    private Command(String command, String identifier, String data) {
+    public Command(String command, String identifier, String data) {
         this.command = command;
         this.identifier = identifier;
         this.data = data;
@@ -37,7 +37,7 @@ class Command {
         return new Command("unsubscribe", identifier);
     }
 
-    static Command message(String identifier, JsonObject params) {
+    public static Command message(String identifier, JsonObject params) {
         return new Command("message", identifier, params.toString());
     }
 

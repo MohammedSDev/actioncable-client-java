@@ -122,6 +122,8 @@ public class Connection {
 
     private boolean isReopening = false;
 
+    private GeneralListener generalListener;
+
     /*package*/ Connection(URI uri, Options options) {
         this.uri = uri;
         this.options = options;
@@ -241,7 +243,9 @@ public class Connection {
 
     private void doSend(String data) {
         if (webSocket != null) {
-            webSocket.send(data);
+            boolean isSent = webSocket.send(data);
+            if (isSent && generalListener != null)
+                generalListener.onSend(data);
         }
     }
 
@@ -260,6 +264,9 @@ public class Connection {
         }
     }
 
+    /*package*/ void setGeneralListener(GeneralListener listener) {
+        generalListener = listener;
+    }
     private WebSocketListener webSocketListener = new WebSocketListener() {
         @Override
         public void onOpen(WebSocket webSocket, Response response) {

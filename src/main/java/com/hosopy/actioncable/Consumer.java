@@ -28,6 +28,8 @@ public class Consumer {
 
     private Subscriptions subscriptions;
 
+    private GeneralListener generalListener;
+
     /*package*/ Consumer(URI uri, Options options) {
         this.subscriptions = new Subscriptions(this);
         this.connection = new Connection(uri, options);
@@ -37,16 +39,19 @@ public class Consumer {
             public void onOpen() {
                 connectionMonitor.recordConnect();
                 subscriptions.reload();
+                if (generalListener != null) generalListener.onOpen();
             }
 
             @Override
             public void onFailure(Exception e) {
                 subscriptions.notifyFailed(new ActionCableException(e));
+                if (generalListener != null) generalListener.onFailure(new ActionCableException(e));
             }
 
             @Override
             public void onMessage(String string) {
                 final Message message = Message.fromJson(string);
+                if (generalListener != null) generalListener.onMessage(string);
                 if (message.isWelcome()) {
                     onOpen();
                 } else if (message.isPing()) {
@@ -64,10 +69,12 @@ public class Consumer {
             public void onClosing() {
                 subscriptions.notifyDisconnected();
                 connectionMonitor.recordDisconnect();
+                if (generalListener != null) generalListener.onClosing();
             }
 
             @Override
             public void onClosed() {
+                if (generalListener != null) generalListener.onClosed();
             }
         });
     }
@@ -107,7 +114,12 @@ public class Consumer {
         connectionMonitor.stop();
     }
 
-    /*package*/ boolean send(Command command) {
+    public void setGeneralListener(GeneralListener listener) {
+        generalListener = listener;
+        connection.setGeneralListener(listener);
+    }
+
+    public boolean send(Command command) {
         return connection.send(command.toJson());
     }
 
