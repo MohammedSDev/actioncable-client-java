@@ -1,9 +1,9 @@
 # actioncable-client-java
 
-[![Build Status](https://travis-ci.org/hosopy/actioncable-client-java.svg)](https://travis-ci.org/hosopy/actioncable-client-java)
-[![Release](https://jitpack.io/v/hosopy/actioncable-client-java.svg)](https://jitpack.io/#hosopy/actioncable-client-java)
+<!--- [![Build Status](https://travis-ci.org/hosopy/actioncable-client-java.svg)](https://travis-ci.org/hosopy/actioncable-client-java) --->
+[![Release](https://jitpack.io/v/MohammedSDev/actioncable-client-java.svg)](https://jitpack.io/#MohammedSDev/actioncable-client-java)
 
-This is the actioncable client library for Java.
+This is the actioncable client library for Java (Fork version, source is [here](https://github.com/hosopy/actioncable-client-java)).
 Please see [Action Cable Overview](http://guides.rubyonrails.org/action_cable_overview.html) to understand actioncable itself.
 
 ## Usage
@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.hosopy:actioncable-client-java:0.1.2'
+	implementation 'com.github.MohammedSDev:actioncable-client-java:0.3.RC1'
 }
 ```
 
@@ -31,14 +31,6 @@ Please see [user guide](https://sites.google.com/site/gson/gson-user-guide) to k
 // 1. Setup
 URI uri = new URI("ws://cable.example.com");
 Consumer consumer = ActionCable.createConsumer(uri);
-
-// or specify some options
-URI uri = new URI("ws://cable.example.com");
-Consumer.Options options = new Consumer.Options();
-options.reconnection = true;
-options.pingInterval = 30l;
-options.pingTimeUnit = TimeUnit.SECONDS;
-Consumer consumer = ActionCable.createConsumer(uri, options);
 
 // 2. Create subscription
 Channel appearanceChannel = new Channel("AppearanceChannel");
@@ -75,10 +67,6 @@ subscription
 // 3. Establish connection
 consumer.connect();
 
-if(consumer.isConnected()) {
-    System.out.println("Consumer connected!");
-}
-
 // 4. Perform any action
 subscription.perform("away");
 
@@ -86,9 +74,6 @@ subscription.perform("away");
 JsonObject params = new JsonObject();
 params.addProperty("foo", "bar");
 subscription.perform("appear", params);
-
-// 6. Unsubscribe & close connection
-consumer.unsubscribeAndDisconnect();
 ```
 
 ### Passing Parameters to Channel
@@ -207,6 +192,14 @@ Below is a list of available options.
     ```java
     options.reconnectionMaxAttempts = 30;
     ```
+    
+* pingPong
+    * If pingPong is true, the client send `pong` command in response to the server ping message.
+    * Default is `false`.
+    
+    ```java
+    options.pingPong = true;
+    ```
 
 * okHttpClientFactory
     * Factory instance to create your own OkHttpClient.
@@ -265,7 +258,7 @@ Consumer consumer = ActionCable.createConsumer(uri, options);
 ### Proguard Rules
 
 ```java
--keep class com.hosopy.actioncable.** { _; } 
+-keep class com.hosopy.actioncable.** { *; }
 -keep interface com.hosopy.actioncable._* { *; }
 ```
 
