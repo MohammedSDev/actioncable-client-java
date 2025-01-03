@@ -30,7 +30,8 @@ public class Connection {
         CONNECTING,
         OPEN,
         CLOSING,
-        CLOSED
+        CLOSED,
+        IDEAL
     }
 
     /*package*/ interface Listener {
@@ -110,7 +111,7 @@ public class Connection {
         }
     }
 
-    private State state = State.CONNECTING;
+    private State state = State.IDEAL;
 
     private URI uri;
 
