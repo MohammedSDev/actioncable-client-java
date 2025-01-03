@@ -10,6 +10,8 @@ public class ConnectionMonitor {
 
     private static final int STALE_THRESHOLD = 6; // Server::Connections::BEAT_INTERVAL * 2 (missed two pings)
 
+    private int staleThresholdInSecond = STALE_THRESHOLD;
+
     private final Connection connection;
 
     private final ScheduledExecutorService pollExecutorService;
@@ -98,11 +100,11 @@ public class ConnectionMonitor {
     }
 
     private boolean connectionIsStale() {
-        return secondsSince(pingedAt > 0 ? pingedAt : startedAt) > STALE_THRESHOLD;
+        return secondsSince(pingedAt > 0 ? pingedAt : startedAt) > staleThresholdInSecond;
     }
 
     private boolean disconnectedRecently() {
-        return disconnectedAt != 0 && secondsSince(disconnectedAt) < STALE_THRESHOLD;
+        return disconnectedAt != 0 && secondsSince(disconnectedAt) < staleThresholdInSecond;
     }
 
     private long getInterval() {
@@ -120,5 +122,10 @@ public class ConnectionMonitor {
 
     private static double clamp(double number, int min, int max) {
         return Math.max(min, Math.min(max, number));
+    }
+
+
+    /*package*/ void setStaleThresholdInSecond(int staleThresholdInSecond) {
+        this.staleThresholdInSecond = staleThresholdInSecond;
     }
 }

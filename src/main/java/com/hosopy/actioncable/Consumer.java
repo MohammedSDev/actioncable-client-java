@@ -123,6 +123,10 @@ public class Consumer {
         return connection.send(command.toJson());
     }
 
+    public void setStaleThresholdInSecond(int staleThresholdInSecond){
+        if(connectionMonitor !=null) connectionMonitor.setStaleThresholdInSecond(staleThresholdInSecond);
+    }
+
     public Connection getConnection() {
         return connection;
     }
