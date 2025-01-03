@@ -127,7 +127,19 @@ public class Consumer {
         return connection;
     }
 
+    public boolean isConnecting() {
+        return this.connection != null && this.connection.isConnecting();
+    }
+
     public boolean isConnected() {
         return this.connection != null && this.connection.isOpen();
+    }
+
+    public boolean isClosing() {
+        return this.connection != null && this.connection.isClosing();
+    }
+
+    public boolean isClosed() {
+        return this.connection == null || this.connection.isClosed();
     }
 }

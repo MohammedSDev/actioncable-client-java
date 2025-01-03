@@ -180,6 +180,15 @@ public class Connection {
     /*package*/ boolean isOpen() {
         return webSocket != null && isState(State.OPEN);
     }
+    /*package*/ boolean isConnecting() {
+        return isState(State.CONNECTING);
+    }
+    /*package*/ boolean isClosed() {
+        return isState(State.CLOSED);
+    }
+    /*package*/ boolean isClosing() {
+        return isState(State.CLOSING);
+    }
 
     /*package*/ boolean send(final String data) {
         if (isOpen()) {
