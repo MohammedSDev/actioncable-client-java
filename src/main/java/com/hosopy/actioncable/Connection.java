@@ -1,5 +1,6 @@
 package com.hosopy.actioncable;
 
+import com.hosopy.actioncable.annotation.WebSocketException;
 import com.hosopy.concurrent.EventLoop;
 import com.hosopy.util.QueryStringUtils;
 
@@ -291,7 +292,7 @@ public class Connection {
                     state = State.CLOSED;
 
                     if (listener != null) {
-                        listener.onFailure((Exception) t);
+                        listener.onFailure(new WebSocketException(t));
                     }
                 }
             });
