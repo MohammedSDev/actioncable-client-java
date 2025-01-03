@@ -136,6 +136,8 @@ public class Connection {
             public void run() {
                 if (isOpen()) {
                     fireOnFailure(new IllegalStateException("Must close existing connection before opening"));
+                } else if (isConnecting()) {
+                    fireOnFailure(new IllegalStateException("Already connection, must close existing connection before opening"));
                 } else {
                     doOpen();
                 }
