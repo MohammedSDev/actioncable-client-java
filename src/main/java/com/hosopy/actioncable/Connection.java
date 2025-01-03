@@ -291,10 +291,13 @@ public class Connection {
 
         @Override
         public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+            Connection.this.state = State.CLOSED;
+
             EventLoop.execute(new Runnable() {
                 @Override
                 public void run() {
                     state = State.CLOSED;
+                    Connection.this.webSocket = null;
 
                     if (listener != null) {
                         listener.onFailure(new WebSocketException(t));
@@ -323,6 +326,12 @@ public class Connection {
                 @Override
                 public void run() {
                     state = State.CLOSING;
+                    try{
+                        webSocket.close(code, reason);
+                        Connection.this.webSocket = null;
+                    } catch (IllegalStateException e) {
+                        //do nothing
+                    }
 
                     if (listener != null) {
                         listener.onClosing();
