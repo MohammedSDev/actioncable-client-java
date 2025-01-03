@@ -1,13 +1,9 @@
 package com.hosopy.actioncable;
 
-import com.hosopy.actioncable.annotation.WebSocketException;
 import com.hosopy.concurrent.EventLoop;
 import com.hosopy.util.QueryStringUtils;
 
-import java.io.IOException;
-import java.net.CookieHandler;
 import java.net.URI;
-import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -21,8 +17,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
-import okio.Buffer;
-import okio.ByteString;
 
 
 public class Connection {
