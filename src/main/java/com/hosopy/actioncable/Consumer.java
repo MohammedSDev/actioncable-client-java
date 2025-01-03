@@ -127,6 +127,10 @@ public class Consumer {
         if(connectionMonitor !=null) connectionMonitor.setStaleThresholdInSecond(staleThresholdInSecond);
     }
 
+    public boolean hasSubscription(String channel) {
+        return subscriptions != null && subscriptions.hasSubscription(channel);
+    }
+
     public Connection getConnection() {
         return connection;
     }

@@ -24,6 +24,7 @@ public class Channel {
     private final JsonObject params = new JsonObject();
 
     private String identifier;
+    private String name;
 
     /**
      * Constructor
@@ -31,6 +32,7 @@ public class Channel {
      * @param channel Channel name
      */
     public Channel(String channel) {
+        this.name = channel;
         params.addProperty(KEY_CHANNEL, channel);
     }
 
@@ -91,5 +93,9 @@ public class Channel {
             params.add(key, value);
             identifier = null;
         }
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -136,4 +136,13 @@ public class Subscriptions {
     private boolean sendSubscribeCommand(SubscriptionProxy subscriptionProxy) {
         return consumer.send(Command.subscribe(subscriptionProxy.getIdentifier()));
     }
+
+    /*package*/ boolean hasSubscription(String channelName) {
+        for (SubscriptionProxy subscription : subscriptionProxies.values()) {
+            if (subscription.getChannelName().equals(channelName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

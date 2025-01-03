@@ -45,6 +45,10 @@ public class SubscriptionProxy<T extends Subscription> {
         return channel.toIdentifier();
     }
 
+    /*package*/ String getChannelName() {
+        return channel.getName();
+    }
+
     /*package*/ void onConnected(Subscription.ConnectedCallback callback) {
         onConnected = callback;
     }
