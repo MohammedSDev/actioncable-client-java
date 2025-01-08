@@ -66,8 +66,9 @@ public class ConnectionMonitor {
 
     /*package*/ void start() {
         reset();
-        stoppedAt = 0;
+        pingedAt = 0;
         startedAt = now();
+        stoppedAt = 0;
         poll();
     }
 
