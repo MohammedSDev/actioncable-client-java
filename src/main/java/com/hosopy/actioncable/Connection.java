@@ -114,7 +114,7 @@ public class Connection {
 
     private Listener listener;
 
-    private WebSocket webSocket;
+    private WebSocket mWebSocket;
 
     private boolean isReopening = false;
 
@@ -149,11 +149,11 @@ public class Connection {
         EventLoop.execute(new Runnable() {
             @Override
             public void run() {
-                if (webSocket != null) {
+                if (mWebSocket != null) {
                     try {
                         // http://tools.ietf.org/html/rfc6455#section-7.4.1
                         if (!isState(State.CLOSING, State.CLOSED)) {
-                            webSocket.close(1000, "connection closed manually");
+                            mWebSocket.close(1000, "connection closed manually");
                             state = State.CLOSING;
                         }
                     } catch (IllegalStateException e) {
@@ -174,7 +174,7 @@ public class Connection {
     }
 
     /*package*/ boolean isOpen() {
-        return webSocket != null && isState(State.OPEN);
+        return mWebSocket != null && isState(State.OPEN);
     }
     /*package*/ boolean isConnecting() {
         return isState(State.CONNECTING);
@@ -249,8 +249,8 @@ public class Connection {
     }
 
     private void doSend(String data) {
-        if (webSocket != null) {
-            boolean isSent = webSocket.send(data);
+        if (mWebSocket != null) {
+            boolean isSent = mWebSocket.send(data);
             if (isSent && generalListener != null)
                 generalListener.onSend(data);
         }
@@ -278,7 +278,7 @@ public class Connection {
         @Override
         public void onOpen(WebSocket webSocket, Response response) {
             Connection.this.state = State.OPEN;
-            Connection.this.webSocket = webSocket;
+            Connection.this.mWebSocket = webSocket;
             EventLoop.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -297,7 +297,7 @@ public class Connection {
                 @Override
                 public void run() {
                     state = State.CLOSED;
-                    Connection.this.webSocket = null;
+                    Connection.this.mWebSocket = null;
 
                     if (listener != null) {
                         listener.onFailure(new WebSocketException(t));
@@ -328,7 +328,7 @@ public class Connection {
                     state = State.CLOSING;
                     try{
                         webSocket.close(code, reason);
-                        Connection.this.webSocket = null;
+                        Connection.this.mWebSocket = null;
                     } catch (IllegalStateException e) {
                         //do nothing
                     }
