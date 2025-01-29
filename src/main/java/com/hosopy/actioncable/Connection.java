@@ -291,6 +291,7 @@ public class Connection {
 
         @Override
         public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+            if(webSocket != mWebSocket) return;
             Connection.this.state = State.CLOSED;
 
             EventLoop.execute(new Runnable() {
@@ -320,6 +321,13 @@ public class Connection {
 
         @Override
         public void onClosing(WebSocket webSocket, int code, String reason) {
+            if (mWebSocket != null && webSocket != mWebSocket) {
+                try {
+                    webSocket.close(code, reason);
+                } catch (Exception e) {
+                }
+                return;
+            }
             Connection.this.state = State.CLOSING;
 
             EventLoop.execute(new Runnable() {
@@ -348,6 +356,7 @@ public class Connection {
 
         @Override
         public void onClosed(WebSocket webSocket, int code, String reason) {
+            if (mWebSocket != null && webSocket != mWebSocket) return;
             Connection.this.state = State.CLOSED;
 
             EventLoop.execute(new Runnable() {
