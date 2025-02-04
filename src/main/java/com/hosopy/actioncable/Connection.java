@@ -291,7 +291,7 @@ public class Connection {
 
         @Override
         public void onFailure(WebSocket webSocket, Throwable t, Response response) {
-            if(webSocket != mWebSocket) return;
+            if (mWebSocket != null && webSocket != mWebSocket) return;
             Connection.this.state = State.CLOSED;
 
             EventLoop.execute(new Runnable() {
