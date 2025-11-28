@@ -69,9 +69,22 @@ public class Subscriptions {
      *
      * @param channelName channel name of an exist subscription to remove
      */
+    @Deprecated
     public void remove(String channelName) {
         for (SubscriptionProxy subscription : subscriptionProxies.values()) {
             if (subscription.getChannelName().equals(channelName)) {
+                remove(subscription.getProxy());
+            }
+        }
+    }
+    /**
+     * Remove subscription from collection.
+     *
+     * @param identifier channel name of an exist subscription to remove
+     */
+    public void removeByIdentifier(String identifier) {
+        for (SubscriptionProxy subscription : subscriptionProxies.values()) {
+            if (subscription.getIdentifier().equals(identifier)) {
                 remove(subscription.getProxy());
             }
         }
