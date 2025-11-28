@@ -76,6 +76,7 @@ public class Channel {
         addParamInternal(key, value);
     }
 
+
     public String toIdentifier() {
         synchronized (params) {
             if (identifier == null) {
