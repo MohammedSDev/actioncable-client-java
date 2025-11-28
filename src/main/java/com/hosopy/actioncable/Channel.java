@@ -76,7 +76,7 @@ public class Channel {
         addParamInternal(key, value);
     }
 
-    /*package*/ String toIdentifier() {
+    public String toIdentifier() {
         synchronized (params) {
             if (identifier == null) {
                 identifier = GSON.toJson(params);
