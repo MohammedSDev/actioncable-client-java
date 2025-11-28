@@ -150,6 +150,7 @@ public class Subscriptions {
         return consumer.send(Command.subscribe(subscriptionProxy.getIdentifier()));
     }
 
+    @Deprecated(since = "use hasChannel()")
     /*package*/ boolean hasSubscription(String channelName) {
         for (SubscriptionProxy subscription : subscriptionProxies.values()) {
             if (subscription.getChannelName().equals(channelName)) {
@@ -158,4 +159,23 @@ public class Subscriptions {
         }
         return false;
     }
+
+    /*package*/ boolean hasChannel(String channelName) {
+        for (SubscriptionProxy subscription : subscriptionProxies.values()) {
+            if (subscription.getChannelName().equals(channelName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*package*/ boolean hasSubscriptionOf(String identifier) {
+        for (SubscriptionProxy subscriptionProxy : subscriptionProxies.values()) {
+            if (subscriptionProxy.getIdentifier().equals(identifier)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
