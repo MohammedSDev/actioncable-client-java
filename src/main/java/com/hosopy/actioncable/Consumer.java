@@ -159,4 +159,10 @@ public class Consumer {
     public boolean isClosed() {
         return this.connection == null || this.connection.isClosed();
     }
+
+    public Integer getReconnectAttempts() {
+        if (connectionMonitor != null)
+        return connectionMonitor.getReconnectAttempts();
+        else return null;
+    }
 }

@@ -113,6 +113,10 @@ public class ConnectionMonitor {
         return (long) clamp(interval, reconnectionDelay, reconnectionDelayMax) * 1000;
     }
 
+    public int getReconnectAttempts() {
+        return reconnectAttempts;
+    }
+
     private static long secondsSince(long time) {
         return (now() - time) / 1000;
     }
